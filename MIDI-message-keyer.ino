@@ -15,7 +15,7 @@
 #define BUTTON_PIN_2 3
 
 #define LED_PIN1 12
-#define LED_PIN2 13
+#define LED_PIN2 11
 
 #define DEBOUNCE_INTERVAL 20 // Define debounce time in ms
 
@@ -69,43 +69,46 @@ void loop() {
   // Update the Bounce instances :
   debouncer1.update();
 
-  // Get the updated value :
-//  int toggleCh1 = debouncer1.read();
-//  int toggleCh2 = debouncer2.read();
-
   // Turn on the LED if the button is pressed :
   if ( debouncer1.fell() ) {
     switch (Ch1Enabled) {
     case false:
       // Turn Ch1 on
       Ch1Enabled = true;
+      pinMode(LED_PIN1,OUTPUT);
       digitalWrite(LED_PIN1, HIGH );
       break;
          
     case true:
       // Turn Ch2 off
       Ch1Enabled = false;
-      digitalWrite(LED_PIN1, LOW );
+      //digitalWrite(LED_PIN1, LOW );
+      // Set the LED pin to high-Z state in order to avoid messing up with 
+      // the button high logic level (due to the circuit)
+      pinMode(LED_PIN1,INPUT_PULLUP);
       break;
     }
   }
   
 
   debouncer2.update();
-
   // Turn on the LED if the button is pressed :
   if ( debouncer2.fell() ) {
     switch (Ch2Enabled) {
     case false:
       // Turn Ch2 on
       Ch2Enabled = true;
+      pinMode(LED_PIN2,OUTPUT);
       digitalWrite(LED_PIN2, HIGH );
       break;
          
     case true:
       // Turn Ch2 off
       Ch2Enabled = false;
-      digitalWrite(LED_PIN2, LOW );
+      //digitalWrite(LED_PIN2, LOW );
+      // Set the LED pin to high-Z state in order to avoid messing up with 
+      // the button high logic level (due to the circuit)
+      pinMode(LED_PIN2,INPUT_PULLUP);
       break;
     }
   }
